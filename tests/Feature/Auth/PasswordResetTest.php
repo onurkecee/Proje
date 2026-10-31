@@ -35,7 +35,18 @@ class PasswordResetTest extends TestCase
 
         $this->post(route('password.email'), ['email' => $user->email]);
 
-        Notification::assertSentTo($user, ResetPassword::class);
+        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
+            $mail = $notification->toMail($user);
+
+            $this->assertSame('Şifreni yenile', $mail->subject);
+            $this->assertSame('Şifremi yenile', $mail->actionText);
+            $this->assertStringContainsString(
+                'Bu e-postayı, hesabın için bir şifre yenileme isteği aldığımız için gönderiyoruz.',
+                implode(' ', $mail->introLines),
+            );
+
+            return true;
+        });
     }
 
     public function test_reset_password_screen_can_be_rendered()
@@ -90,6 +101,8 @@ class PasswordResetTest extends TestCase
             'password_confirmation' => 'newpassword123',
         ]);
 
-        $response->assertSessionHasErrors('email');
+        $response->assertSessionHasErrors([
+            'email' => 'Şifre yenileme bağlantısı geçersiz veya süresi dolmuş.',
+        ]);
     }
 }

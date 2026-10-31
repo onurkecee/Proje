@@ -1,0 +1,7 @@
+{
+    "Reset your password": "Şifreni yenile",
+    "You are receiving this email because we received a password reset request for your account.": "Bu e-postayı, hesabın için bir şifre yenileme isteği aldığımız için gönderiyoruz.",
+    "Reset Password": "Şifremi yenile",
+    "This password reset link will expire in :count minutes.": "Bu şifre yenileme bağlantısının süresi :count dakika içinde dolacak.",
+    "If you did not request a password reset, no further action is required.": "Şifre yenileme isteğinde bulunmadıysan bu e-postayı yok sayabilirsin."
+}

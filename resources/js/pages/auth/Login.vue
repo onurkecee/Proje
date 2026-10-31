@@ -14,8 +14,9 @@ import { request } from '@/routes/password';
 
 defineOptions({
     layout: {
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
+        title: 'Hesabına giriş yap',
+        description:
+            'Finans kayıtlarına devam etmek için giriş bilgilerini yaz.',
     },
 });
 
@@ -26,11 +27,11 @@ defineProps<{
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head title="Giriş yap" />
 
     <div
         v-if="status"
-        class="mb-4 text-center text-sm font-medium text-green-600"
+        class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800"
     >
         {{ status }}
     </div>
@@ -39,11 +40,11 @@ defineProps<{
         v-bind="store.form()"
         :reset-on-success="['password']"
         v-slot="{ errors, processing }"
-        class="flex flex-col gap-6"
+        class="flex flex-col gap-5"
     >
-        <div class="grid gap-6">
+        <div class="grid gap-5">
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="email">E-posta adresi</Label>
                 <Input
                     id="email"
                     type="email"
@@ -52,21 +53,21 @@ defineProps<{
                     v-focus
                     :tabindex="1"
                     autocomplete="email"
-                    placeholder="email@example.com"
+                    placeholder="ornek@eposta.com"
                 />
                 <InputError :message="errors.email" />
             </div>
 
             <div class="grid gap-2">
                 <div class="flex items-center justify-between">
-                    <Label for="password">Password</Label>
+                    <Label for="password">Şifre</Label>
                     <TextLink
                         v-if="canResetPassword"
                         :href="request()"
-                        class="text-sm"
+                        class="text-xs font-medium text-[#416149] underline-offset-4 hover:underline sm:text-sm"
                         :tabindex="5"
                     >
-                        Forgot your password?
+                        Şifremi unuttum
                     </TextLink>
                 </div>
                 <PasswordInput
@@ -75,7 +76,7 @@ defineProps<{
                     required
                     :tabindex="2"
                     autocomplete="current-password"
-                    placeholder="Password"
+                    placeholder="Şifreni gir"
                 />
                 <InputError :message="errors.password" />
             </div>
@@ -83,25 +84,30 @@ defineProps<{
             <div class="flex items-center justify-between">
                 <Label for="remember" class="flex items-center space-x-3">
                     <Checkbox id="remember" name="remember" :tabindex="3" />
-                    <span>Remember me</span>
+                    <span>Beni hatırla</span>
                 </Label>
             </div>
 
             <Button
                 type="submit"
-                class="mt-4 w-full"
+                class="mt-2 h-11 w-full rounded-xl bg-[#183e2b] font-semibold text-white hover:bg-[#24583d]"
                 :tabindex="4"
                 :disabled="processing"
                 data-test="login-button"
             >
                 <Spinner v-if="processing" />
-                Log in
+                Giriş yap
             </Button>
         </div>
 
         <div class="text-center text-sm text-muted-foreground">
-            Don't have an account?
-            <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
+            Hesabın yok mu?
+            <TextLink
+                :href="register()"
+                :tabindex="5"
+                class="font-semibold text-[#416149]"
+                >Hemen kayıt ol</TextLink
+            >
         </div>
     </Form>
 </template>
